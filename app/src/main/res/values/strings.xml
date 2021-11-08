@@ -2,13 +2,12 @@
     <string name="app_name">Memory</string>
 
     <array name="spinnerSize">
-        <item>4x2</item>
+        <item>Choose</item>
+        <item>2x4</item>
+        <item>3x6</item>
         <item>4x4</item>
-        <item>6x3</item>
-        <item>6x4</item>
+        <item>3x6</item>
         <item>6x6</item>
         <item>8x6</item>
-        <item>8x8</item>
-        <item>8x10</item>
     </array>
 </resources>

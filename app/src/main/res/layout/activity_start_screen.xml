@@ -12,7 +12,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.5"
+        android:layout_weight="1"
         android:gravity="center">
 
         <TextView
@@ -30,11 +30,20 @@
         android:gravity="center"
         android:orientation="vertical">
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Size:"
+                android:textSize="15dp"
+                android:layout_marginBottom="10dp"/>
 
             <Spinner
                 android:id="@+id/sizeSpinner"
@@ -43,7 +52,32 @@
                 android:layout_height="50dp"
                 android:layout_marginHorizontal="60dp"
                 android:entries="@array/spinnerSize"
-                android:textAlignment="center"/>
+                android:foregroundTint="@color/black"
+                android:textAlignment="center" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.5"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:onClick="startGame">
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:lottie_rawRes="@raw/start_button"
+                android:id="@+id/startButton"/>
 
         </LinearLayout>
 
@@ -53,33 +87,10 @@
             android:layout_weight="1"
             android:gravity="center">
 
-            <Button
-                style="@style/startButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="30dp"
-                android:paddingVertical="10dp"
-                android:textSize="20dp"
-                android:text="Play"/>
+
 
         </LinearLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center">
-
-        <Spinner
-            android:id="@+id/sizeSpinner2"
-            android:background="@drawable/style_spinner2"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginHorizontal="60dp"
-            android:entries="@array/spinnerSize"
-            android:textAlignment="center"/>
 
     </LinearLayout>
 

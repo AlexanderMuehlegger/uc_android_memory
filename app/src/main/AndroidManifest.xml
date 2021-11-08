@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Memory">
         <activity
-            android:name=".MainActivity"
+            android:name=".MemoryActivity"
             android:exported="true" />
         <activity
             android:name=".Start_Screen_Activity"
