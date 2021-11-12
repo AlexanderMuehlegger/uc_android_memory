@@ -52,6 +52,7 @@ public class Playground {
                 randomZahl = r.nextInt(picsAr.length-0)+0;
                 if(!usedPics.contains(randomZahl)){
                     cardList.get(i).setValue(picsAr[randomZahl]);
+                    cardList.get(i).setVisible(true);
                     cardList.get(i+1).setValue(picsAr[randomZahl]);
                     usedPics.add(randomZahl);
                     break;
@@ -115,28 +116,104 @@ public class Playground {
     }
 
     public String toString(){
-        String casingPart = "-------+";
+
+//
+//        for(int i = 0; i < cards.length; i++){
+//            System.out.print("+");
+//            for(int j = 0; j < cards[i].length; j++){
+//                System.out.print(casingPart);
+//            }
+//            System.out.print("\n|");
+//
+//
+//
+//            for(int j = 0; j < cards[i].length; j++){
+//                System.out.printf("  %d  |", cards[i][j].getValue());
+//            }
+//
+//            System.out.print("\n");
+//        }
+//
+//        System.out.print("+");
+//        for(int j = 0; j < cards[0].length; j++){
+//            System.out.print(casingPart);
+//        }
+//        System.out.println();
+//        return null;
+
+
+        StringBuilder builder = new StringBuilder();
+        String casingPart = "-------+", toAdd;
+        int neededSpaces = 2;
+        int casingLength = String.valueOf(cards[0][0].getValue()).length()+2;
+        int nrColumn = cards[0].length;
+
+
 
         for(int i = 0; i < cards.length; i++){
-            System.out.print("+");
-            for(int j = 0; j < cards[i].length; j++){
-                System.out.print(casingPart);
-            }
-            System.out.print("\n|");
-
-
-
-            for(int j = 0; j < cards[i].length; j++){
-                System.out.printf("  %d  |", cards[i][j].getValue());
+            builder.append("\n+");
+            for(int j = 0; j < nrColumn; j++){
+                for(int k = 0; k < casingLength; k++){
+                    builder.append("-");
+                }
+                builder.append("+");
             }
 
-            System.out.print("\n");
+            builder.append("\n|");
+
+            for(int j = 0; j < nrColumn; j++){
+
+                for(int k = 0; k < 1; k++){
+                    builder.append(" ");
+                }
+
+                builder.append(cards[i][j].getValue());
+
+                for(int k = 0; k < 1; k++){
+                    builder.append(" ");
+                }
+
+                builder.append("|");
+
+            }
+
+            builder.append("\n|");
+
+            for(int j = 0; j < nrColumn; j++){
+                if(casingLength - String.valueOf(cards[i][j].getValue()).length() > 0){
+                    neededSpaces = ((casingLength - String.valueOf(cards[i][j].getValue()).length())+2);
+
+                }
+
+                for(int k = 0; k < neededSpaces; k++){
+                    builder.append(" ");
+                }
+
+                builder.append(cards[i][j].isVisible());
+
+
+                if(!cards[i][j].isVisible()){
+                    for(int k = 0; k < neededSpaces-1; k++){
+                        builder.append(" ");
+                    }
+                }else{
+                    for(int k = 0; k < neededSpaces; k++){
+                        builder.append(" ");
+                    }
+                }
+
+                builder.append("|");
+
+            }
         }
-        System.out.print("+");
-        for(int j = 0; j < cards[0].length; j++){
-            System.out.print(casingPart);
+
+        builder.append("\n+");
+        for(int j = 0; j < nrColumn; j++){
+            for(int k = 0; k < casingLength; k++){
+                builder.append("-");
+            }
+            builder.append("+");
         }
-        System.out.println();
-        return null;
+        return builder.toString();
     }
 }

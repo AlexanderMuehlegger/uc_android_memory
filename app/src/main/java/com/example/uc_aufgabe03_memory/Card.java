@@ -4,9 +4,7 @@ public class Card {
     private boolean visible = false;
     private int value = -1;
 
-    public Card(){
-
-    }
+    public Card(){}
 
     public Card(int value, boolean visible){
         this.visible = visible;
