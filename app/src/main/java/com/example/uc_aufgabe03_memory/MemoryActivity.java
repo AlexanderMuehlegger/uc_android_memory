@@ -107,7 +107,7 @@ public class MemoryActivity extends AppCompatActivity {
         return button;
     }
 
-    private int[] getPicsArray(){
+    public static int[] getPicsArray(){
         int[] c = new int[32];
 
         c[0] = R.drawable.i110;
@@ -165,10 +165,10 @@ public class MemoryActivity extends AppCompatActivity {
         if(pos == null)
             return;
 
-        if(field.getCard(pos).visible)
+        if(field.getCard(pos).isVisible())
             return;
 
-        int value = field.getCard(pos).value;
+        int value = field.getCard(pos).getValue();
 
 
         button.setImageResource(pics[value-110]);
@@ -185,7 +185,7 @@ public class MemoryActivity extends AppCompatActivity {
                 blockSelection = false;
                 pairsFound++;
                 previousCard = null;
-                field.getCard(pos).visible = true;
+                field.getCard(pos).setVisible(true);
                 if(pairsFound >= (field.x*field.y)/4){
                     if(field.finished())
                         showVictory();

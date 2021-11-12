@@ -86,7 +86,7 @@ public class Start_Screen_Activity extends AppCompatActivity {
     }
 
     public void startGame(){
-        if(!firstStart){
+
             startButton.setMaxFrame(60);
             startButton.setVisibility(View.VISIBLE);
 
@@ -123,8 +123,7 @@ public class Start_Screen_Activity extends AppCompatActivity {
                 }
             });
 
-        }else{
-            firstStart = false;
-        }
+
+
     }
 }

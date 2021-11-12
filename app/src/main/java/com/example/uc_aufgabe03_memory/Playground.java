@@ -1,7 +1,10 @@
 package com.example.uc_aufgabe03_memory;
 
+import java.lang.reflect.Array;
+import java.security.cert.CollectionCertStoreParameters;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 public class Playground {
@@ -23,72 +26,53 @@ public class Playground {
         this.x = x;
         this.y = y;
 
+        cards = new Card[x][y];
         if(!initialized)
             init();
     }
 
     public void init(){
+        if(initialized)
+            return;
+
         Random r = new Random();
-        Card randomCard = null, randomCard2 = null;
-        int randomIndex = 0, picNum = 0, trys = 0;
+        List<Card> cardList = new ArrayList<Card>();
+        int[] picsAr = MemoryActivity.getPicsArray();
+        ArrayList<Integer> usedPics = new ArrayList<Integer>();
 
-        ArrayList<Integer> chosenPics = new ArrayList<Integer>();
-
-        for(int i = 110; i <= 141; i++){
-            chosenPics.add(i);
+        for(int i = 0; i < x*y; i++){
+            cardList.add(new Card());
         }
 
+        int randomZahl = 0;
 
-        cards = new Card[x][y];
-
-        for (int i = 0; i < x; i++){
-            for(int j = 0; j < y; j++){
-                cards[i][j] = new Card();
-            }
-        }
-
-        for (int i = 0; i < (x*y); i++){
-            randomIndex = r.nextInt(chosenPics.size() - 0)+ 0;
-
-
+        System.out.println("Card List size: " + cardList.size());
+        for(int i = 0; i < cardList.size(); i += 2){
             while(true){
-                randomCard = getRandomCard(r);
-                randomCard2 = getRandomCard(r);
-
-                if(((randomCard.value == -1) && (randomCard2.value == -1)) && (randomCard != randomCard2)){
-                    randomCard.value = chosenPics.get(randomIndex);
-                    randomCard2.value = chosenPics.get(randomIndex);
-                    chosenPics.remove(randomIndex);
-                    break;
-                }else{
-                    trys++;
-                }
-
-
-                if(trys >= 50){
+                randomZahl = r.nextInt(picsAr.length-0)+0;
+                if(!usedPics.contains(randomZahl)){
+                    cardList.get(i).setValue(picsAr[randomZahl]);
+                    cardList.get(i+1).setValue(picsAr[randomZahl]);
+                    usedPics.add(randomZahl);
                     break;
                 }
             }
-
+            randomZahl = i;
         }
 
-        if(trys >= 50){
-            int partnerlessCards = 1;
+        System.out.println("Last index: " + randomZahl);
 
-            while(partnerlessCards > 0){
-                chosenPics = leftOverPartners(r, chosenPics);
-                partnerlessCards = chosenPics.get(chosenPics.size()-1);
-                chosenPics.remove(chosenPics.size()-1);
-            }
+        Collections.shuffle(cardList);
 
-        }
-
-
-        for (int i = 0; i < x; i++){
+        short temp = 0;
+        for(int i = 0; i < x; i++){
             for(int j = 0; j < y; j++){
-                System.out.println("Reihe: " + (i+1) + " Spalte: " + (j+1) + " " + cards[i][j].value);
+                cards[i][j] = cardList.get(temp);
+                temp++;
             }
         }
+
+            System.out.println(toString());
 
         initialized = true;
     }
@@ -102,7 +86,7 @@ public class Playground {
     public boolean finished(){
         for(int i = 0; i < cards.length; i++){
             for(int j = 0; j < cards[i].length; j++){
-                if(!cards[i][j].visible)
+                if(!cards[i][j].isVisible())
                     return false;
             }
         }
@@ -111,7 +95,7 @@ public class Playground {
     }
 
     public boolean isPair(Position pos1, Position pos2){
-        return (cards[pos1.x][pos1.y].value == cards[pos2.x][pos2.y].value);
+        return (cards[pos1.x][pos1.y].getValue() == cards[pos2.x][pos2.y].getValue());
     }
 
     public Card getCard(Position pos){
@@ -130,69 +114,6 @@ public class Playground {
         return cards[randomRow-1][randomColumn-1];
     }
 
-    private ArrayList<Integer> leftOverPartners(Random r, ArrayList<Integer> chosenPics){
-        int randomIndex;
-        Card randomCard;
-        Card randomCard2;
-
-        int randomPartner, randomPartner2;
-        ArrayList<Card> partnerLessCards = new ArrayList<Card>();
-        for(int i = 0; i < x; i++){
-            for(int j = 0; j < y; j++){
-                if(cards[i][j].value == -1){
-                    partnerLessCards.add(cards[i][j]);
-                }
-            }
-        }
-
-        System.out.printf("Partnerless cards: %d\n", partnerLessCards.size());
-
-        for (int i = 0; i < x; i++){
-            for(int j = 0; j < y; j++){
-                System.out.println("Reihe: " + (i+1) + " Spalte: " + (j+1) + " " + cards[i][j].value);
-            }
-        }
-
-
-        System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-
-
-        for(int i = 0; i <= (partnerLessCards.size()/2)+1; i++){
-            randomIndex = r.nextInt(chosenPics.size() - 0)+ 0;
-
-            if(partnerLessCards.size() == 0)
-                break;
-
-            while(true){
-                randomPartner = r.nextInt(partnerLessCards.size()-0)+0;
-                randomPartner2 = r.nextInt(partnerLessCards.size()-0)+0;
-
-                if((randomPartner != randomPartner2)){
-                    randomCard = partnerLessCards.get(randomPartner);
-                    randomCard2 = partnerLessCards.get(randomPartner2);
-
-                    partnerLessCards.remove(partnerLessCards.indexOf(randomCard));
-                    partnerLessCards.remove(partnerLessCards.indexOf(randomCard2));
-                    break;
-                }
-            }
-
-            randomCard.value = chosenPics.get(randomIndex);
-            randomCard2.value = chosenPics.get(randomIndex);
-
-
-            System.out.println(chosenPics.get(randomIndex));
-            chosenPics.remove(randomIndex);
-
-        }
-        System.out.printf("Left overs: %d\n",partnerLessCards.size());
-
-        chosenPics.add(partnerLessCards.size());
-        return chosenPics;
-    }
-
-
-
     public String toString(){
         String casingPart = "-------+";
 
@@ -206,7 +127,7 @@ public class Playground {
 
 
             for(int j = 0; j < cards[i].length; j++){
-                System.out.printf("  %d  |", cards[i][j].value);
+                System.out.printf("  %d  |", cards[i][j].getValue());
             }
 
             System.out.print("\n");
