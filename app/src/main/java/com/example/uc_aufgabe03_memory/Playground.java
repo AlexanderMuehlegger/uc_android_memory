@@ -10,7 +10,7 @@ import java.util.Random;
 public class Playground {
 
     private Card[][] cards;
-    private int whosOnTurn;
+    private boolean whosOnTurn = true;
     private int[] score;
     private boolean initialized = false;
 
@@ -46,22 +46,17 @@ public class Playground {
 
         int randomZahl = 0;
 
-        System.out.println("Card List size: " + cardList.size());
         for(int i = 0; i < cardList.size(); i += 2){
             while(true){
                 randomZahl = r.nextInt(picsAr.length-0)+0;
                 if(!usedPics.contains(randomZahl)){
                     cardList.get(i).setValue(picsAr[randomZahl]);
-                    cardList.get(i).setVisible(true);
                     cardList.get(i+1).setValue(picsAr[randomZahl]);
                     usedPics.add(randomZahl);
                     break;
                 }
             }
-            randomZahl = i;
         }
-
-        System.out.println("Last index: " + randomZahl);
 
         Collections.shuffle(cardList);
 
@@ -115,33 +110,10 @@ public class Playground {
         return cards[randomRow-1][randomColumn-1];
     }
 
+    public boolean getPlayer(){
+        return whosOnTurn;
+    }
     public String toString(){
-
-//
-//        for(int i = 0; i < cards.length; i++){
-//            System.out.print("+");
-//            for(int j = 0; j < cards[i].length; j++){
-//                System.out.print(casingPart);
-//            }
-//            System.out.print("\n|");
-//
-//
-//
-//            for(int j = 0; j < cards[i].length; j++){
-//                System.out.printf("  %d  |", cards[i][j].getValue());
-//            }
-//
-//            System.out.print("\n");
-//        }
-//
-//        System.out.print("+");
-//        for(int j = 0; j < cards[0].length; j++){
-//            System.out.print(casingPart);
-//        }
-//        System.out.println();
-//        return null;
-
-
         StringBuilder builder = new StringBuilder();
         String casingPart = "-------+", toAdd;
         int neededSpaces = 2;

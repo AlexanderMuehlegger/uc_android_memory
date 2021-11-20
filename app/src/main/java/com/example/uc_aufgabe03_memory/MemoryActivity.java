@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
 
@@ -32,7 +33,11 @@ public class MemoryActivity extends AppCompatActivity {
     private int pairsFound = 0;
     private boolean blockSelection = false;
 
+    private TextView scorePlayerOne, scorePlayerOneText;
+    private TextView scorePlayerTwo, scorePlayerTwoText;
+    private LinearLayout background;
 
+    final private int foundPrice = 100, notFoundPrice = -10;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +52,15 @@ public class MemoryActivity extends AppCompatActivity {
         pics = getPicsArray();
 
         receiveMessage();
+
+	scorePlayerOne = (TextView) findViewById(R.id.scoreTextView);
+        scorePlayerOneText = (TextView) findViewById(R.id.scoreText);
+
+
+        scorePlayerTwo = (TextView) findViewById(R.id.scoreTextViewTwo);
+        scorePlayerTwoText = (TextView) findViewById(R.id.scoreTextTwo);
+
+        background = findViewById(R.id.background);
     }
 
     @Override
@@ -171,7 +185,7 @@ public class MemoryActivity extends AppCompatActivity {
         int value = field.getCard(pos).getValue();
 
 
-        button.setImageResource(pics[value-110]);
+        button.setImageResource(value);
 
 
 
@@ -185,6 +199,8 @@ public class MemoryActivity extends AppCompatActivity {
                 blockSelection = false;
                 pairsFound++;
                 previousCard = null;
+		        refreshScore(true, field.getPlayer());
+                refreshBackground(field.getPlayer());
                 field.getCard(pos).setVisible(true);
                 if(pairsFound >= (field.x*field.y)/4){
                     if(field.finished())
@@ -230,6 +246,48 @@ public class MemoryActivity extends AppCompatActivity {
 
 
     private void showVictory(){
+    }
+    
+    public void refreshScore(boolean foundPair, boolean player){ //player(true) = 1. Spieler | player(false) = 2. Spieler
+        TextView playerScore;
+        if(player){
+            playerScore = scorePlayerOne;
+        }else{
+            playerScore = scorePlayerTwo;
+        }
+
+
+        int score = Integer.parseInt(playerScore.getText().toString());
+
+        if(foundPair){
+            score += foundPrice;
+        }else{
+            score += notFoundPrice;
+        }
+
+        playerScore.setText(String.valueOf(score));
+    }
+
+    private void switchColors(){
+        if(scorePlayerOne.getCurrentTextColor() == getResources().getColor(R.color.fontDark)){
+            scorePlayerOne.setTextColor(getResources().getColor(R.color.fontLight));
+            scorePlayerOneText.setTextColor(getResources().getColor(R.color.fontLight));
+            scorePlayerTwo.setTextColor(getResources().getColor(R.color.fontLight));
+            scorePlayerTwoText.setTextColor(getResources().getColor(R.color.fontLight));
+        }else if(scorePlayerOne.getCurrentTextColor() == getResources().getColor(R.color.fontLight)){
+            scorePlayerOne.setTextColor(getResources().getColor(R.color.fontDark));
+            scorePlayerOneText.setTextColor(getResources().getColor(R.color.fontDark));
+            scorePlayerTwo.setTextColor(getResources().getColor(R.color.fontDark));
+            scorePlayerTwoText.setTextColor(getResources().getColor(R.color.fontDark));
+        }
+    }
+
+    private void refreshBackground(boolean player){
+        if(player){
+            background.setBackgroundColor(getResources().getColor(R.color.player1));
+        }else{
+            background.setBackgroundColor(getResources().getColor(R.color.player2));
+        }
     }
 
 

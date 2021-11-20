@@ -2,7 +2,7 @@
     <string name="app_name">Memory</string>
 
     <array name="spinnerSize">
-        <item>Choose</item>
+        <item>ChooseM</item>
         <item>2x4</item>
         <item>3x6</item>
         <item>4x4</item>

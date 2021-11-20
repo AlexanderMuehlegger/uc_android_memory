@@ -10,4 +10,9 @@
     <color name="startButton">#ff5dfb</color>
     <color name="spinnerColor">#75e8e7</color>
     <color name="backgroundGray">#969892</color>
+    <color name="player1">#0000FF</color>
+    <color name="player2">#BF0A30 </color>
+    <color name="fontColor">#000000</color>
+    <color name="fontLight">#FFFFFF</color>
+    <color name="fontDark">#000000</color>
 </resources>
